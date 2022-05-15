@@ -33,7 +33,7 @@ func StringSum(input string) (output string, err error) {
 	trstr := strings.Trim(rplstr, " ")
 
 	if trstr == "" {
-		return "", errorEmptyInput
+		return "", fmt.Errorf("cannot calculate sum: %w", errorEmptyInput)
 	}
 
 	val1 := strings.Split(strings.Trim(trstr, " "), "+")
@@ -42,7 +42,7 @@ func StringSum(input string) (output string, err error) {
 		val1 = strings.Split(strings.Trim(trstr, " "), "-")
 
 		if len(val1) == 1 {
-			return "", fmt.Errorf("not enough operators")
+			return "", fmt.Errorf("cannot calculate sum: %w", errorNotTwoOperands)
 		}
 
 		operator = "-"
@@ -53,20 +53,20 @@ func StringSum(input string) (output string, err error) {
 			val1[0] = "-" + val1[1]
 			val1[1] = val1[2]
 		} else {
-			return "", fmt.Errorf("want expecting two operands, but received more or less")
+			return "", fmt.Errorf("cannot calculate sum: %w", errorNotTwoOperands)
 		}
 	}
 
 	left, err1 := strconv.Atoi(strings.Trim(val1[0], " "))
 
 	if err1 != nil {
-		return "", fmt.Errorf("My error %q", err1)
+		return "", fmt.Errorf("cannot calculate sum: %w", err1)
 	}
 
 	right, err2 := strconv.Atoi(strings.Trim(val1[1], " "))
 
 	if err2 != nil {
-		return "", fmt.Errorf("My error %q", err2)
+		return "", fmt.Errorf("cannot calculate sum: %w", err2)
 	}
 
 	if err == nil {
