@@ -32,6 +32,10 @@ func StringSum(input string) (output string, err error) {
 
 	trstr := strings.Trim(rplstr, " ")
 
+	if trstr == "" {
+		return "", fmt.Errorf("input is empty")
+	}
+
 	val1 := strings.Split(strings.Trim(trstr, " "), "+")
 
 	if len(val1) == 1 {
@@ -44,13 +48,13 @@ func StringSum(input string) (output string, err error) {
 		operator = "-"
 	}
 
-	if len(val1) > 2 && (val1[0] != "" && operator == "-") {
-		return "", fmt.Errorf("too many operators")
-	}
-
-	if len(val1) == 3 && val1[0] == "" {
-		val1[0] = "-" + val1[1]
-		val1[1] = val1[2]
+	if len(val1) > 2 {
+		if len(val1) == 3 && val1[0] == "" {
+			val1[0] = "-" + val1[1]
+			val1[1] = val1[2]
+		} else {
+			return "", fmt.Errorf("too many operators")
+		}
 	}
 
 	left, err1 := strconv.Atoi(strings.Trim(val1[0], " "))
