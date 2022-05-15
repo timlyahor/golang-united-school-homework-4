@@ -60,13 +60,13 @@ func StringSum(input string) (output string, err error) {
 	left, err1 := strconv.Atoi(strings.Trim(val1[0], " "))
 
 	if err1 != nil {
-		return "", err.(*strconv.NumError).Err
+		return "", fmt.Errorf("My error %q", err1)
 	}
 
 	right, err2 := strconv.Atoi(strings.Trim(val1[1], " "))
 
 	if err2 != nil {
-		return "", err.(*strconv.NumError)
+		return "", fmt.Errorf("My error %q", err2)
 	}
 
 	if err == nil {
