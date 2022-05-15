@@ -1,0 +1,96 @@
+package string_sum
+
+import (
+	"strconv"
+	"testing"
+)
+
+func TestTask1SimpleSum(t *testing.T) {
+	sourceData := "5+3"
+	res, _ := StringSum(sourceData)
+
+	if res != "8" {
+		t.Errorf("Result was incorect, got: %s, want: %s.", res, "8")
+	}
+}
+
+func TestTask1SimpleSum2(t *testing.T) {
+	sourceData := "5+2"
+	res, _ := StringSum(sourceData)
+
+	if res != "7" {
+		t.Errorf("Result was incorect, got: %s, want: %s.", res, "8")
+	}
+}
+
+func TestTask1SimpleSumWithSpaces(t *testing.T) {
+	sourceData := "5 + 3"
+	res, _ := StringSum(sourceData)
+
+	if res != "8" {
+		t.Errorf("Result was incorect, got: %s, want: %s.", res, "8")
+	}
+}
+
+func TestTask1SimpleSumWithDoubleOperators(t *testing.T) {
+	sourceData := "5+-3"
+	res, _ := StringSum(sourceData)
+
+	if res != "2" {
+		t.Errorf("Result was incorect, got: %s, want: %s.", res, "2")
+	}
+}
+
+func TestTask1SimpleSumWithDoubleOperators2(t *testing.T) {
+	sourceData := "5-+3"
+	res, _ := StringSum(sourceData)
+
+	if res != "2" {
+		t.Errorf("Result was incorect, got: %s, want: %s.", res, "2")
+	}
+}
+
+func TestTask1SimpleSumDoubleOperand(t *testing.T) {
+	sourceData := "4 ++ 3"
+	_, err := StringSum(sourceData)
+
+	if err == nil {
+		t.Errorf("Result was incorect, expected exception")
+	}
+}
+
+func TestTask1SimpleSumWithDoubleOperators3(t *testing.T) {
+	sourceData := "-5-+3"
+	res, _ := StringSum(sourceData)
+
+	if res != "-8" {
+		t.Errorf("Result was incorect, got: %s, want: %s.", res, "-8")
+	}
+}
+
+func TestTask1SimpleSumWithDoubleOperators4(t *testing.T) {
+	sourceData := "-5+3"
+	res, _ := StringSum(sourceData)
+
+	if res != "-2" {
+		t.Errorf("Result was incorect, got: %s, want: %s.", res, "-2")
+	}
+}
+
+func TestTask1SimpleSumDoubleOperand2(t *testing.T) {
+	sourceData := "4--3"
+	_, err := StringSum(sourceData)
+
+	if err == nil {
+		t.Errorf("Result was incorect, expected exception")
+	}
+}
+
+func TestTask1SimpleSumFirstParamIncorrect(t *testing.T) {
+	sourceData := "a + 3"
+	_, err := StringSum(sourceData)
+
+	if err == nil || err != err.(*strconv.NumError) {
+		t.Errorf("Result was incorect, expected exception")
+	}
+}

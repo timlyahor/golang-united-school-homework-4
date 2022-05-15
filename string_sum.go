@@ -2,6 +2,9 @@ package string_sum
 
 import (
 	"errors"
+	"fmt"
+	"strconv"
+	"strings"
 )
 
 //use these errors as appropriate, wrapping them with fmt.Errorf function
@@ -23,5 +26,53 @@ var (
 // Use the errors defined above as described, again wrapping into fmt.Errorf
 
 func StringSum(input string) (output string, err error) {
-	return "", nil
+	var operator = "+"
+	rplstr := strings.Replace(input, "-+", "-", -1)
+	rplstr = strings.Replace(rplstr, "+-", "-", -1)
+
+	trstr := strings.Trim(rplstr, " ")
+
+	val1 := strings.Split(strings.Trim(trstr, " "), "+")
+
+	if len(val1) == 1 {
+		val1 = strings.Split(strings.Trim(trstr, " "), "-")
+
+		if len(val1) == 1 {
+			return "", fmt.Errorf("not enough operators")
+		}
+
+		operator = "-"
+	}
+
+	if len(val1) > 2 && (val1[0] != "" && operator == "-") {
+		return "", fmt.Errorf("too many operators")
+	}
+
+	if len(val1) == 3 && val1[0] == "" {
+		val1[0] = "-" + val1[1]
+		val1[1] = val1[2]
+	}
+
+	left, err1 := strconv.Atoi(strings.Trim(val1[0], " "))
+
+	if err1 != nil {
+		return "", err1
+	}
+
+	right, err2 := strconv.Atoi(strings.Trim(val1[1], " "))
+
+	if err2 != nil {
+		return "", err2
+	}
+
+	if err == nil {
+		if operator == "+" {
+			output = strconv.Itoa(left + right)
+		} else {
+			output = strconv.Itoa(left - right)
+		}
+
+	}
+
+	return output, err
 }
