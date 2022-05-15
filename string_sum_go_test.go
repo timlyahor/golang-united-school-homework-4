@@ -1,6 +1,7 @@
 package string_sum
 
 import (
+	"errors"
 	"strconv"
 	"testing"
 )
@@ -108,7 +109,7 @@ func TestTask1SimpleSumFirstParamIncorrect(t *testing.T) {
 	sourceData := "a + 3"
 	_, err := StringSum(sourceData)
 
-	if err == nil || err != err.(*strconv.NumError) {
+	if !errors.Is(err, err.(*strconv.NumError)) {
 		t.Errorf("Result was incorect, expected exception")
 	}
 }
